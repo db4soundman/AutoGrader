@@ -39,13 +39,26 @@ public class AutoGrader {
 	 *             printwriter with try/catch
 	 */
 	public static void main(String[] args) throws Exception {
+
+		int halfOfClass;
+
+		halfOfClass = Integer
+				.parseInt(JOptionPane
+						.showInputDialog("Which half of the class are you grading?"));
+
 		File directory = new File(HW_ID);
 		File[] d = directory.listFiles();
-		uniqueIds = new String[d.length - 1];
-
-		for (int i = 0; i < uniqueIds.length; i++) {
-			String name = d[i].getPath();
-			uniqueIds[i] = name.substring(name.indexOf("/") + 1);
+		uniqueIds = new String[(d.length / 2)];
+		int indexOfFiles;
+		if (halfOfClass == 1)
+			indexOfFiles = 0;
+		else indexOfFiles = d.length / 2;
+		for (int i = 0; i < uniqueIds.length; i++, indexOfFiles++) {
+			String name = d[indexOfFiles].getPath();
+			if (name.contains(".DS_Store")) {
+				i--;
+			}
+			else uniqueIds[i] = name.substring(name.indexOf("/") + 1);
 		}
 
 		int numOfFilesToCompile = Integer
