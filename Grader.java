@@ -454,8 +454,5 @@ public class Grader {
 				break;
 			}
 
-		// Tests for other methods to be determined based on desired
-		// output, which is unclear at this time
-
 	}
 }
