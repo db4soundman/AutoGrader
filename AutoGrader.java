@@ -38,7 +38,7 @@ public class AutoGrader {
 	 *             Just because I don't want to surround the
 	 *             printwriter with try/catch
 	 */
-	public static void main(String[] args) throws Exception {
+	public static void main(String[] args) throws IOException {
 
 		int halfOfClass;
 
@@ -69,12 +69,14 @@ public class AutoGrader {
 		for (int i = 0; i < numOfFilesToCompile; i++)
 			fileNames[i] = JOptionPane
 					.showInputDialog("Enter name of the Java file WITHOUT the .java ending");
-
+		PrintWriter fileChecker = new PrintWriter(new File(
+				"Missing Files.txt"));
 		for (String person : uniqueIds) {
 
-			compileTurnins(person, fileNames);
+			compileTurnins(person, fileNames, fileChecker);
 			copyFiles(person);
 		}
+		fileChecker.close();
 		createBuildFile();
 		combineAndGatherReports();
 
@@ -91,9 +93,8 @@ public class AutoGrader {
 	 *             Not worth try/catching a PrintWriter
 	 */
 	public static void compileTurnins(String person,
-			String[] fileNames) throws FileNotFoundException {
-		PrintWriter fileChecker = new PrintWriter(new File(
-				"Missing Files.txt"));
+			String[] fileNames, PrintWriter fileChecker)
+			throws FileNotFoundException {
 		for (String fileName : fileNames) {
 			try {
 				JavaCompiler compiler = ToolProvider
@@ -122,7 +123,6 @@ public class AutoGrader {
 				e.printStackTrace();
 			}
 		}
-		fileChecker.close();
 	}
 
 	/**
