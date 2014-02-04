@@ -182,7 +182,7 @@ public class Grader {
 	}
 
 	/**
-	 * Calls specific methods that are supposed to me in the student's
+	 * Calls specific methods that are supposed to be in the student's
 	 * homework and runs tests to verify output and other expected
 	 * behavior.
 	 * 
@@ -225,7 +225,7 @@ public class Grader {
 
 		testHand(reporter, handToDeal, "bffftfffff");
 
-		// 7,7,7,7,6 HEARTS
+		// 7,7,7,7,6 HEARTS.... 4 of a kind
 		handToDeal[0] = deck[6];// 7
 		handToDeal[1] = deck[19];// 7
 		handToDeal[2] = deck[18];// 6
@@ -243,11 +243,29 @@ public class Grader {
 
 		testHand(reporter, handToDeal, "btttfftfff");
 
-		// 10,J,K,Q CLUBS, A Spades .... turns out to be a loser hand
+		// 5S, 6D, 8C, 8D, 8H
+		handToDeal[0] = deck[7];// 8C
+		handToDeal[1] = deck[44];// 6D
+		handToDeal[2] = deck[20];// 8H
+		handToDeal[3] = deck[30];// 5S
+		handToDeal[4] = deck[46];// 8D
+
+		testHand(reporter, handToDeal, "btftffffff");
+
+		// 10,J,K,Q CLUBS, A Spades
 		handToDeal[0] = deck[9];// 10C
 		handToDeal[1] = deck[11];// JC
 		handToDeal[2] = deck[13];// KC
 		handToDeal[3] = deck[26];// AS
+		handToDeal[4] = deck[12];// QS
+
+		testHand(reporter, handToDeal, "bffftfffff");
+
+		// 10,J,K,Q CLUBS, 5 Spades... loser hand
+		handToDeal[0] = deck[9];// 10C
+		handToDeal[1] = deck[11];// JC
+		handToDeal[2] = deck[13];// KC
+		handToDeal[3] = deck[31];// 5S
 		handToDeal[4] = deck[12];// QS
 
 		testHand(reporter, handToDeal, "bfffffffff");
