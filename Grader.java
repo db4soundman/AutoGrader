@@ -207,6 +207,15 @@ public class Grader {
 
 		testHand(reporter, handToDeal, "bfffttfftt");
 
+		// K,Q,J, HEARTS, A,2 Clubs
+		handToDeal[0] = deck[0];// AC
+		handToDeal[1] = deck[23];// JH
+		handToDeal[2] = deck[25];// KH
+		handToDeal[3] = deck[24];// QH
+		handToDeal[4] = deck[1];// 2C
+
+		testHand(reporter, handToDeal, "bfffffffff");
+
 		// 2,3,4,5,6 Clubs
 		handToDeal[0] = deck[3];// 4
 		handToDeal[1] = deck[5];// 6
