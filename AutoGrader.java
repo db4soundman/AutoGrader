@@ -30,7 +30,7 @@ import javax.xml.bind.Marshaller;
 public class AutoGrader {
 
 	public static String[] uniqueIds;
-	public static final String HW_ID = "HW9";
+	public static final String HW_ID = "HW1_TURNIN";
 
 	/**
 	 * @param args
@@ -211,7 +211,8 @@ public class AutoGrader {
 				jarFile.delete();
 			}
 			catch (FileNotFoundException e) {
-				e.printStackTrace();
+				continue;
+				// e.printStackTrace();
 			}
 		}
 		testResults.close();

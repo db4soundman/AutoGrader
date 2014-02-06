@@ -265,9 +265,9 @@ public class Grader {
 		// 10,J,K,Q CLUBS, A Spades
 		handToDeal[0] = deck[9];// 10C
 		handToDeal[1] = deck[11];// JC
-		handToDeal[2] = deck[13];// KC
+		handToDeal[2] = deck[10];// KC
 		handToDeal[3] = deck[26];// AS
-		handToDeal[4] = deck[12];// QS
+		handToDeal[4] = deck[12];// QC
 
 		testHand(reporter, handToDeal, "bffftfffff");
 
@@ -326,6 +326,18 @@ public class Grader {
 			Card[] handToDeal, String handAttributes) {
 		int testPosition = 9;// Represents the constants of hand
 								// attributes - 1
+
+		// Testing sorting--------------------------------------------
+		PokerStats.sort(handToDeal);
+		for (int i = 0; i < 4; i++)
+			if (handToDeal[i].getValue() > handToDeal[i + 1]
+					.getValue()) {
+				reporter.print("Incorrectly sorted this hand: ");
+				for (Card c : handToDeal)
+					reporter.print(c.toString() + " ");
+				reporter.println();
+				break;
+			}
 
 		if ((PokerStats.hasRoyalFlush(handToDeal) && handAttributes
 				.charAt(testPosition) == 'f')
@@ -451,18 +463,6 @@ public class Grader {
 			reporter.println();
 		}
 		testPosition--;
-
-		// Testing sorting--------------------------------------------
-		PokerStats.sort(handToDeal);
-		for (int i = 0; i < 4; i++)
-			if (handToDeal[i].getValue() > handToDeal[i + 1]
-					.getValue()) {
-				reporter.print("Incorrectly sorted this hand: ");
-				for (Card c : handToDeal)
-					reporter.print(c.toString() + " ");
-				reporter.println();
-				break;
-			}
 
 	}
 }
