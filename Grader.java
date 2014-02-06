@@ -42,7 +42,8 @@ public class Grader {
 			e.printStackTrace();
 		}
 		catch (Exception e) {
-			performanceReport.print("Missing a method...");
+			performanceReport
+					.print("Missing a method...or something else.");
 			performanceReport.println(e.getMessage());
 		}
 	}
