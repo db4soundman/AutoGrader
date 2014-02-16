@@ -30,7 +30,7 @@ import javax.xml.bind.Marshaller;
 public class AutoGrader {
 
 	public static String[] uniqueIds;
-	public static final String HW_ID = "HW1_TURNIN";
+	public static final String HW_ID = "HW2";
 
 	/**
 	 * @param args
@@ -63,18 +63,30 @@ public class AutoGrader {
 
 		int numOfFilesToCompile = Integer
 				.parseInt(JOptionPane
-						.showInputDialog("How many student Turnins need to be compiled?"));
+						.showInputDialog("How many total Java files (other than the Grader) need to be compiled?"));
 
-		String[] fileNames = new String[numOfFilesToCompile];
-		for (int i = 0; i < numOfFilesToCompile; i++)
+		String[] fileNames = new String[numOfFilesToCompile + 1];
+		fileNames[0] = "Grader";
+		for (int i = 1; i < fileNames.length; i++)
 			fileNames[i] = JOptionPane
 					.showInputDialog("Enter name of the Java file WITHOUT the .java ending");
+
+		int numOfFilesToCopy = Integer
+				.parseInt(JOptionPane
+						.showInputDialog("How many supplementary grader classes (NOT THE GRADER) need to be copied to the student turnin?"));
+
+		String[] supplements = new String[numOfFilesToCopy];
+		for (int i = 0; i < numOfFilesToCopy; i++)
+			supplements[i] = JOptionPane
+					.showInputDialog("Enter name of the Java file WITHOUT the .java ending");
+
 		PrintWriter fileChecker = new PrintWriter(new File(
 				"Missing Files.txt"));
 		for (String person : uniqueIds) {
 
+			copyFiles(person, supplements);
 			compileTurnins(person, fileNames, fileChecker);
-			copyFiles(person);
+
 		}
 		fileChecker.close();
 		createBuildFile();
@@ -137,9 +149,9 @@ public class AutoGrader {
 	 *         their filename did not match specifications, or did not
 	 *         turn in a file
 	 */
-	public static void copyFiles(String person) {
-		File hw = new File(HW_ID + "/" + person + "/Grader.class");
-		File loc = new File("src/Grader.class");
+	public static void copyFiles(String person, String[] supplements) {
+		File hw = new File(HW_ID + "/" + person + "/Grader.java");
+		File loc = new File("src/Grader.java");
 		try {
 			FileChannel inputChannel = null;
 			FileChannel outputChannel = null;
@@ -155,6 +167,29 @@ public class AutoGrader {
 		}
 		catch (IOException e) {
 			e.printStackTrace();
+		}
+
+		for (String s : supplements) {
+			hw = new File(HW_ID + "/" + person + "/" + s + ".java");
+			loc = new File("src/" + s + ".java");
+			try {
+				FileChannel inputChannel = null;
+				FileChannel outputChannel = null;
+				try {
+					inputChannel = new FileInputStream(loc)
+							.getChannel();
+					outputChannel = new FileOutputStream(hw)
+							.getChannel();
+					outputChannel.transferFrom(inputChannel, 0,
+							inputChannel.size());
+				} finally {
+					inputChannel.close();
+					outputChannel.close();
+				}
+			}
+			catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
 
 	}
