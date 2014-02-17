@@ -70,11 +70,12 @@ public class Project {
 	public void initialize(File hwLoc, String[] ids) {
 		this.name = "RunGrader";
 		this.defaultTask = "java";
-		this.tar = new Target[2];
-		for (int i = 0; i < 2; i++)
+		this.tar = new Target[3];
+		for (int i = 0; i < 3; i++)
 			tar[i] = new Target();
 		tar[1].initializeJars(hwLoc, ids);
 		tar[0].initialize(hwLoc, ids);
+		tar[2].initializeCompiler(hwLoc, ids);
 	}
 
 }

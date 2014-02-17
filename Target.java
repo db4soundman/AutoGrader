@@ -15,7 +15,9 @@ import javax.xml.bind.annotation.XmlElement;
 public class Target {
 
 	private String name;
+	private String failOnError;
 	private CommandJar[] jar;
+	private CommandCompile[] compile;
 	private Command[] java;
 	private String depends;
 
@@ -33,6 +35,22 @@ public class Target {
 	 */
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	/**
+	 * @return the failOnError
+	 */
+	@XmlAttribute(name = "failonerror")
+	public String getFailOnError() {
+		return failOnError;
+	}
+
+	/**
+	 * @param failOnError
+	 *            the failOnError to set
+	 */
+	public void setFailOnError(String failOnError) {
+		this.failOnError = failOnError;
 	}
 
 	/**
@@ -83,6 +101,22 @@ public class Target {
 		this.jar = jar;
 	}
 
+	/**
+	 * @return the compile
+	 */
+	@XmlElement(name = "javac")
+	public CommandCompile[] getCompile() {
+		return compile;
+	}
+
+	/**
+	 * @param compile
+	 *            the compile to set
+	 */
+	public void setCompile(CommandCompile[] compile) {
+		this.compile = compile;
+	}
+
 	public void initialize(File hwLoc, String[] ids) {
 		this.name = "java";
 		this.depends = "jar";
@@ -95,11 +129,26 @@ public class Target {
 
 	public void initializeJars(File hwLoc, String[] ids) {
 		this.name = "jar";
+		// this.depends = "compile";
 		this.jar = new CommandJar[ids.length];
 		for (int i = 0; i < jar.length; i++) {
 			this.jar[i] = new CommandJar();
 			this.jar[i].initializeJars(hwLoc, ids[i]);
 		}
+	}
+
+	/**
+	 * @param hwLoc
+	 * @param ids
+	 */
+	public void initializeCompiler(File hwLoc, String[] ids) {
+		// this.name = "compile";
+		// this.failOnError = "false";
+		// this.compile = new CommandCompile[ids.length];
+		// for (int i = 0; i < compile.length; i++) {
+		// this.compile[i] = new CommandCompile();
+		// this.compile[i].initializeCompiler(hwLoc, ids[i]);
+		// }
 	}
 
 }
